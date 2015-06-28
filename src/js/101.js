@@ -155,17 +155,14 @@ var Explainer = {
 					level--;
 				}
 			} else if (isInString) {
-				if (cn === '"') {
-					if (c === '\\') { // \" escape ==> "
-						curString += '"';
-						i++;
-					} else { // leave string
-						curString += c;
-						parts.push({ level: level, type: 'string', value: curString });
-						curString = '';
-						isInString = false;
-						wasInString = true;
-					}
+				if (c === '"') {
+					curString += c;
+					parts.push({ level: level, type: 'string', value: curString });
+					isInString = false;
+					wasInString = true;
+				} else if (c === '\\' && (cn === '"' || cn === '\\')) { // \" escape ==> " , \\ escape ==> \
+					curString += cn;
+					i++;
 				} else {
 					curString += c;
 				}
@@ -225,6 +222,10 @@ var Explainer = {
 					parts.push({ level: level, type: 'op1', value: c });
 				}
 			}
+		}
+
+		if (isInString) {
+			throw new Error('Unfinished string');
 		}
 
 		return parts;
