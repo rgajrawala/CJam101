@@ -1,5 +1,5 @@
 # CJam 101
-Online CJam evaluator and reference. Based off of [RegEx101](https://regex101.com/).
+Online CJam explainer and reference. Based off of [RegEx101](https://regex101.com/).
 
 ## How-To
 + Open [index.html](blog/master/index.html) in your browser, everything should work.
