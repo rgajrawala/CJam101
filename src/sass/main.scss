@@ -1,0 +1,90 @@
+@import "bourbon/bourbon";
+
+html, body {
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #EBEBEB;
+	color: #282828;
+}
+
+.container-full {
+	margin: 0;
+	// padding: 0;
+	width: 100%;
+	height: calc( 100% - 75px );
+}
+
+.col-xs-6 {
+	height: 100%;
+}
+
+.row-xs-3 {
+	height: 33%;
+	margin: 0;
+}
+
+.row-xs-6 {
+	height: 50%;
+	width: 100%;
+	margin: 0;
+}
+
+#explanation {
+	height: calc( 100% - 20px );
+	overflow: scroll;
+}
+
+.pretty-input {
+	width: 100% !important;
+	height: calc( 100% - 50px ) !important;
+	margin-bottom: 5px;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+	font-style: normal !important;
+	box-sizing: border-box !important;
+	font-family: Monaco, Consolas, 'Lucida Console', monospace !important;
+}
+
+.ref-info {
+	float: right;
+}
+
+#reference {
+	height: calc( 100% - 20px );
+	width: 100%;
+}
+
+#reference > .ref-menu {
+	width: 50%;
+	float: left;
+	height: 100%;
+}
+
+.ref-menu > .menu-main {
+
+}
+
+.ref-menu > .menu-dep {
+
+}
+
+.ref-menu > .ref-select, .ref-ex {
+	cursor: pointer;
+}
+
+.menu-dep > .ref-data {
+	display: none;
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+}
+
+#input {
+	height: calc( 100% - 70px ) !important;
+}
+
+.navbar-top {
+	// background-color: #457ABB;
+	color: #FFF;
+}

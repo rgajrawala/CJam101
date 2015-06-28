@@ -1,0 +1,37 @@
+{
+  "name": "cjam101",
+  "version": "0.0.4-alpha",
+  "description": "Online CJam Evaluator and Reference",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "true",
+    "start": "node gulpfile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/usandfriends/CJam101.git"
+  },
+  "keywords": [
+    "cjam",
+    "101",
+    "explainer",
+    "reference"
+  ],
+  "author": "Usandfriends <usandfriends@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/usandfriends/CJam101/issues"
+  },
+  "homepage": "https://github.com/usandfriends/CJam101",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-callback": "0.0.3",
+    "gulp-concat": "^2.6.0",
+    "gulp-jsx": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.2",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.6"
+  }
+}
