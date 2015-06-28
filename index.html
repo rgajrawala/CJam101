@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta name="author" content="Usandfriends">
+		<meta name="creator" content="Usandfriends">
+		<meta name="publisher" content="Usandfriends">
+		<meta name="description" content="Online CJam Evaluator and Reference">
+		<meta name="keywords" content="cjam,evaluator,reference">
+
+		<title>Online CJam Explainer, Evaluator and Reference</title>
+
+		<link href="build/css/open_sans_font.min.css" rel="stylesheet" type="text/css">
+
+		<link rel="stylesheet" href="build/css/open_sans_font.min.css">
+		<link rel="stylesheet" href="build/css/bootstrap.min.css">
+		<link rel="stylesheet" href="build/css/main.min.css">
+
+		<!--[if lt IE 9]>
+			<script src="build/js/html5shiv.min.js"></script>
+		<![endif]-->
+		<script src="build/js/jquery.min.js"></script>
+		<script src="build/js/bootstrap.min.js"></script>
+		<!-- <script src="build/js/react.min.js"></script> -->
+		<script src="build/js/cjam.min.js"></script>
+		<script src="build/js/101.min.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#" title="0.0.4-alpha">CJam 101 &nbsp; <small>alpha</small></a>
+				</div>
+			</div>
+		</nav>
+		<div class="container container-full">
+			<div class="col-xs-6">
+				<div class="row row-xs-3">
+					<b>Code:</b>
+					<textarea id="code" class="form-control pretty-input" placeholder="insert your code here" autofocus="autofocus"></textarea>
+					<p1>Count: <span id="count">0</span> chars</p1>
+				</div>
+				<div class="row row-xs-3">
+					<b>Input:</b>
+					<textarea id="input" class="form-control pretty-input" placeholder="insert your input here"></textarea>
+					<button id="run" class="btn btn-default">Run</button> <button id="permalink" class="btn btn-default">Permalink</button>
+				</div>
+				<div class="row row-xs-3">
+					<b>Output:</b>
+					<textarea id="output" class="form-control pretty-input" disabled="disabled"></textarea>
+				</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="row row-xs-6">
+					<b>Explanation:</b>
+					<div id="explanation"></div>
+				</div>
+				<div class="row row-xs-6">
+					<b>Quick Reference:</b>
+					<div id="reference">
+						<div class="ref-menu menu-main">
+							<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span> <input type="text" placeholder="search reference"> -->
+							<li><button class="ref-select" data-ref="syntax">Syntax</button></li>
+							<li><button class="ref-select" data-ref="operators">Operators</button></li>
+							<li><button class="ref-select" data-ref="variables">Variables</button></li>
+							<li><button class="ref-select" data-ref="examples">Full Examples</button></li>
+						</div>
+						<div class="ref-menu menu-dep">
+							<div class="ref-data" data-ref="syntax">
+								<b>Syntax</b>
+								<li>Literals:
+									<ul>
+										<li>numbers such as <code>1</code>, <code>-5.23</code>, <code>123456789012345678901234567890</code></li>
+										<li>strings such as <code>"hello"</code>; the backslash character <code>\</code> can be used for escaping double quotes and backslashes, nothing else</li>
+										<li>characters such as <code>'a</code> - note the absence of a second single quote; there is no escape character</li>
+									</ul>
+								</li>
+								<li>Operators, named with 1 or 2 letters or special characters</li>
+								<li>Variables, which can be any single uppercase letter</li>
+								<li>Blocks, delimited by <code>{</code> and <code>}</code></li>
+							</div>
+							<div class="ref-data" data-ref="operators">
+								<b>Operators</b>
+								<li><span class="ref-op">!</span> <span class="ref-info ref-op-info">boolean "not"</span></li>
+								<li><span class="ref-op">#</span> <span class="ref-info ref-op-info">power, find index</span></li>
+								<li><span class="ref-op">$</span> <span class="ref-info ref-op-info">copy from stack, sort</span></li>
+								<li><span class="ref-op">%</span> <span class="ref-info ref-op-info">mod, split, map</span></li>
+								<li><span class="ref-op">&</span> <span class="ref-info ref-op-info">bitwise/setwise "and", if-then</span></li>
+								<li><span class="ref-op">(</span> <span class="ref-info ref-op-info">decrement, uncons from left</span></li>
+								<li><span class="ref-op">)</span> <span class="ref-info ref-op-info">increment, uncons from right</span></li>
+								<li><span class="ref-op">*</span> <span class="ref-info ref-op-info">multiply, join, repeat, fold (reduce)</span></li>
+								<li><span class="ref-op">+</span> <span class="ref-info ref-op-info">add, concat</span></li>
+								<li><span class="ref-op">,</span> <span class="ref-info ref-op-info">range, length, filter</span></li>
+								<li><span class="ref-op">-</span> <span class="ref-info ref-op-info">subtract, remove</span></li>
+								<li><span class="ref-op">.</span> <span class="ref-info ref-op-info">infix "vector" operator, must be followed by a binary operator or a block; applies that operator or block on two arrays, item by item, creating an array with the results</span></li>
+								<li><span class="ref-op">/</span> <span class="ref-info ref-op-info">divide, split, each</span></li>
+								<li><span class="ref-op">:</span> <span class="ref-info ref-op-info">infix operator, can be followed by: 1) variable name 2) set variable 3) unary operator - map 4) binary operator - fold (reduce)</span></li>
+								<li><span class="ref-op">;</span> <span class="ref-info ref-op-info">pop and discard</span></li>
+								<li><span class="ref-op"><</span> <span class="ref-info ref-op-info">compare, slice</span></li>
+								<li><span class="ref-op">=</span> <span class="ref-info ref-op-info">compare, array get, find value</span></li>
+								<li><span class="ref-op">></span> <span class="ref-info ref-op-info">compare, slice</span></li>
+								<li><span class="ref-op">?</span> <span class="ref-info ref-op-info">if (ternary)</span></li>
+								<li><span class="ref-op">@</span> <span class="ref-info ref-op-info">rotate top 3 elements on the stack</span></li>
+								<li><span class="ref-op">[</span> <span class="ref-info ref-op-info">start array</span></li>
+								<li><span class="ref-op">\\</span> <span class="ref-info ref-op-info">swap top 2 elements on the stack</span></li>
+								<li><span class="ref-op">]</span> <span class="ref-info ref-op-info">end array</span></li>
+								<li><span class="ref-op">^</span> <span class="ref-info ref-op-info">bitwise xor, symmetric difference</span></li>
+								<li><span class="ref-op">_</span> <span class="ref-info ref-op-info">duplicate top element on the stack</span></li>
+								<li><span class="ref-op">`</span> <span class="ref-info ref-op-info">string representation</span></li>
+								<li><span class="ref-op">a</span> <span class="ref-info ref-op-info">wrap in array</span></li>
+								<li><span class="ref-op">b</span> <span class="ref-info ref-op-info">base conversion</span></li>
+								<li><span class="ref-op">c</span> <span class="ref-info ref-op-info">convert to char</span></li>
+								<li><span class="ref-op">d</span> <span class="ref-info ref-op-info">convert to double</span></li>
+								<li><span class="ref-op">e</span> <span class="ref-info ref-op-info">followed by numeric literal - infix operator, calculates *10x (as in the scientific notation)</span></li>
+								<li><span class="ref-op">f</span> <span class="ref-info ref-op-info">infix operator, can be followed by: 1) variable name - for loop 2) binary operator 3) block - map with extra parameter</span></li>
+								<li><span class="ref-op">g</span> <span class="ref-info ref-op-info">do-while loop that pops the condition, signum, get from url</span></li>
+								<li><span class="ref-op">h</span> <span class="ref-info ref-op-info">do-while loop that leaves the condition on the stack</span></li>
+								<li><span class="ref-op">i</span> <span class="ref-info ref-op-info">convert to integer</span></li>
+								<li><span class="ref-op">j</span> <span class="ref-info ref-op-info">memoize</span></li>
+								<li><span class="ref-op">l</span> <span class="ref-info ref-op-info">read line</span></li>
+								<li><span class="ref-op">m</span> <span class="ref-info ref-op-info">followed by numeric literal - subtract (same as - but avoids the need for a space after it)</span></li>
+								<li><span class="ref-op">o</span> <span class="ref-info ref-op-info">print value</span></li>
+								<li><span class="ref-op">p</span> <span class="ref-info ref-op-info">print string representation and newline</span></li>
+								<li><span class="ref-op">q</span> <span class="ref-info ref-op-info">read the whole input</span></li>
+								<li><span class="ref-op">r</span> <span class="ref-info ref-op-info">read token (whitespace-separated)</span></li>
+								<li><span class="ref-op">s</span> <span class="ref-info ref-op-info">convert to string (char array)</span></li>
+								<li><span class="ref-op">t</span> <span class="ref-info ref-op-info">array set</span></li>
+								<li><span class="ref-op">w</span> <span class="ref-info ref-op-info">while loop</span></li>
+								<li><span class="ref-op">z</span> <span class="ref-info ref-op-info">zip (transpose), abs</span></li>
+								<li><span class="ref-op">|</span> <span class="ref-info ref-op-info">bitwise/setwise "or", if-else</span></li>
+								<li><span class="ref-op">~</span> <span class="ref-info ref-op-info">bitwise "not", eval, dump array</span></li>
+								<b>"Extended" 2-character operators:</b>
+								<li><span class="ref-op">e!</span> <span class="ref-info ref-op-info">unique permutations</span></li>
+								<li><span class="ref-op">e#</span> <span class="ref-info ref-op-info">line comment (not really an operator)</span></li>
+								<li><span class="ref-op">e%</span> <span class="ref-info ref-op-info">string formatting a la printf</span></li>
+								<li><span class="ref-op">e&</span> <span class="ref-info ref-op-info">logical and</span></li>
+								<li><span class="ref-op">e*</span> <span class="ref-info ref-op-info">repeat each item in an array</span></li>
+								<li><span class="ref-op">e<</span> <span class="ref-info ref-op-info">min of 2 values</span></li>
+								<li><span class="ref-op">e=</span> <span class="ref-info ref-op-info">count occurrences</span></li>
+								<li><span class="ref-op">e></span> <span class="ref-info ref-op-info">max of 2 values</span></li>
+								<li><span class="ref-op">e[</span> <span class="ref-info ref-op-info">pad array to the left</span></li>
+								<li><span class="ref-op">e\\</span> <span class="ref-info ref-op-info">swap 2 array items</span></li>
+								<li><span class="ref-op">e]</span> <span class="ref-info ref-op-info">pad array to the right</span></li>
+								<li><span class="ref-op">e_</span> <span class="ref-info ref-op-info">flatten array</span></li>
+								<li><span class="ref-op">e`</span> <span class="ref-info ref-op-info">RLE encode</span></li>
+								<li><span class="ref-op">ea</span> <span class="ref-info ref-op-info">command-line args</span></li>
+								<li><span class="ref-op">ed</span> <span class="ref-info ref-op-info">debug (show stack contents)</span></li>
+								<li><span class="ref-op">ee</span> <span class="ref-info ref-op-info">enumerate array</span></li>
+								<li><span class="ref-op">el</span> <span class="ref-info ref-op-info">lowercase</span></li>
+								<li><span class="ref-op">er</span> <span class="ref-info ref-op-info">transliteration (element replacement)</span></li>
+								<li><span class="ref-op">es</span> <span class="ref-info ref-op-info">timestamp (milliseconds from the epoch)</span></li>
+								<li><span class="ref-op">et</span> <span class="ref-info ref-op-info">local time</span></li>
+								<li><span class="ref-op">eu</span> <span class="ref-info ref-op-info">uppercase</span></li>
+								<li><span class="ref-op">ew</span> <span class="ref-info ref-op-info">overlapping slices</span></li>
+								<li><span class="ref-op">e|</span> <span class="ref-info ref-op-info">logical or</span></li>
+								<li><span class="ref-op">e~</span> <span class="ref-info ref-op-info">RLE decode</span></li>
+								<b>"Math" 2-character operators:</b>
+								<li><span class="ref-op">m!</span> <span class="ref-info ref-op-info">factorial, permutations with duplicates</span></li>
+								<li><span class="ref-op">m*</span> <span class="ref-info ref-op-info">cartesian product, cartesian power</span></li>
+								<li><span class="ref-op">m<</span> <span class="ref-info ref-op-info">bit shift, rotate left</span></li>
+								<li><span class="ref-op">m></span> <span class="ref-info ref-op-info">bit shift, rotate right</span></li>
+								<li><span class="ref-op">mC</span> <span class="ref-info ref-op-info">arccos</span></li>
+								<li><span class="ref-op">mF</span> <span class="ref-info ref-op-info">factorization with exponents</span></li>
+								<li><span class="ref-op">mL</span> <span class="ref-info ref-op-info">log with base</span></li>
+								<li><span class="ref-op">mO</span> <span class="ref-info ref-op-info">round with precision</span></li>
+								<li><span class="ref-op">mQ</span> <span class="ref-info ref-op-info">integer square root</span></li>
+								<li><span class="ref-op">mR</span> <span class="ref-info ref-op-info">random choice</span></li>
+								<li><span class="ref-op">mS</span> <span class="ref-info ref-op-info">arcsin</span></li>
+								<li><span class="ref-op">mT</span> <span class="ref-info ref-op-info">arctan</span></li>
+								<li><span class="ref-op">m[</span> <span class="ref-info ref-op-info">floor</span></li>
+								<li><span class="ref-op">m]</span> <span class="ref-info ref-op-info">ceil</span></li>
+								<li><span class="ref-op">ma</span> <span class="ref-info ref-op-info">atan2</span></li>
+								<li><span class="ref-op">mc</span> <span class="ref-info ref-op-info">cos</span></li>
+								<li><span class="ref-op">md</span> <span class="ref-info ref-op-info">divmod</span></li>
+								<li><span class="ref-op">me</span> <span class="ref-info ref-op-info">exp</span></li>
+								<li><span class="ref-op">mf</span> <span class="ref-info ref-op-info">factorization</span></li>
+								<li><span class="ref-op">mh</span> <span class="ref-info ref-op-info">hypot</span></li>
+								<li><span class="ref-op">ml</span> <span class="ref-info ref-op-info">ln (natural logarithm)</span></li>
+								<li><span class="ref-op">mo</span> <span class="ref-info ref-op-info">round</span></li>
+								<li><span class="ref-op">mp</span> <span class="ref-info ref-op-info">prime</span></li>
+								<li><span class="ref-op">mq</span> <span class="ref-info ref-op-info">sqrt</span></li>
+								<li><span class="ref-op">mr</span> <span class="ref-info ref-op-info">random number, shuffle</span></li>
+								<li><span class="ref-op">ms</span> <span class="ref-info ref-op-info">sin</span></li>
+								<li><span class="ref-op">mt</span> <span class="ref-info ref-op-info">tan</span></li>
+							</div>
+							<div class="ref-data" data-ref="variables">
+								<b>Variables</b>
+								<li><span class="ref-var">A</span> <span class="ref-info ref-op-info">10</li>
+								<li><span class="ref-var">B</span> <span class="ref-info ref-op-info">11</li>
+								<li><span class="ref-var">C</span> <span class="ref-info ref-op-info">12</li>
+								<li><span class="ref-var">D</span> <span class="ref-info ref-op-info">13</li>
+								<li><span class="ref-var">E</span> <span class="ref-info ref-op-info">14</li>
+								<li><span class="ref-var">F</span> <span class="ref-info ref-op-info">15</li>
+								<li><span class="ref-var">G</span> <span class="ref-info ref-op-info">16</li>
+								<li><span class="ref-var">H</span> <span class="ref-info ref-op-info">17</li>
+								<li><span class="ref-var">I</span> <span class="ref-info ref-op-info">18</li>
+								<li><span class="ref-var">J</span> <span class="ref-info ref-op-info">19</li>
+								<li><span class="ref-var">K</span> <span class="ref-info ref-op-info">20</li>
+								<li><span class="ref-var">L</span> <span class="ref-info ref-op-info">"" (same as [])</li>
+								<li><span class="ref-var">M</span> <span class="ref-info ref-op-info">""</li>
+								<li><span class="ref-var">N</span> <span class="ref-info ref-op-info">newline string</li>
+								<li><span class="ref-var">O</span> <span class="ref-info ref-op-info">""</li>
+								<li><span class="ref-var">P</span> <span class="ref-info ref-op-info">pi (3.141592653589793)</li>
+								<li><span class="ref-var">Q</span> <span class="ref-info ref-op-info">""</li>
+								<li><span class="ref-var">R</span> <span class="ref-info ref-op-info">""</li>
+								<li><span class="ref-var">S</span> <span class="ref-info ref-op-info">" " (space)</li>
+								<li><span class="ref-var">T</span> <span class="ref-info ref-op-info">0</li>
+								<li><span class="ref-var">U</span> <span class="ref-info ref-op-info">0</li>
+								<li><span class="ref-var">V</span> <span class="ref-info ref-op-info">0</li>
+								<li><span class="ref-var">W</span> <span class="ref-info ref-op-info">-1</li>
+								<li><span class="ref-var">X</span> <span class="ref-info ref-op-info">1</li>
+								<li><span class="ref-var">Y</span> <span class="ref-info ref-op-info">2</li>
+								<li><span class="ref-var">Z</span> <span class="ref-info ref-op-info"></li>
+							</div>
+							<div class="ref-data" data-ref="examples">
+								<b>Examples</b>
+								<li><button class="ref-ex" data-code="&quot;Hello, world!&quot;" data-input="">Hello world</button></li>
+								<li><button class="ref-ex" data-code="B,2f#S*" data-input="">Squares</button></li>
+								<li><button class="ref-ex" data-code="&quot;`_~&quot;`_~" data-input="">Quine</button></li>
+								<li><button class="ref-ex" data-code="T1{_2$+}A*]S*" data-input="">Fibonacci</button></li>
+								<li><button class="ref-ex" data-code="r~32m5*9/" data-input="77">Fahrenheit to Celsius</button></li>
+								<li><button class="ref-ex" data-code="q'[,65>Dm>_el+_$er" data-input="Super secret message">ROT13</button></li>
+								<li><button class="ref-ex" data-code="r'd/:i~\\,f{;mr)S}" data-input="2d6">Roll dice</button></li>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="build/js/main.min.js"></script>
+	</body>
+</html>
